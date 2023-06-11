@@ -20,24 +20,24 @@ exports.createPost = async (req, res) => {
   console.log(req.body);
   try {
     const { recaptchaValue } = req.body;
-    axios({
-      url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
-      method: "POST",
-    })
-      .then(async ({ data }) => {
-        if (data.success) {
+    // axios({
+    //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
+    //   method: "POST",
+    // })
+    //   .then(async ({ data }) => {
+    //     if (!data.success) {
           const post = await Post.create({
             ...req.body,
             user: req.body.userId,
           });
           res.json(post);
-        } else {
-          res.json({ message: "errمشکلی در اعتبار سنجی کپچا پیش آمد" });
-        }
-      })
-      .catch((error) => {
-        res.json({ message: "errکپچا نا معتبر است" });
-      });
+      //   } else {
+      //     res.json({ message: "errمشکلی در اعتبار سنجی کپچا پیش آمد" });
+      //   }
+      // })
+      // .catch((error) => {
+      //   res.json({ message: "errکپچا نا معتبر است" });
+      // });
   } catch (error) {
     res.json("مشکلی از سمت سرور پیش آمد");
   }
@@ -59,26 +59,26 @@ exports.updatePost = async (req, res) => {
   // console.log("posttttt", p);
   try {
     const { recaptchaValue } = req.body;
-    axios({
-      url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
-      method: "POST",
-    })
-      .then(async ({ data }) => {
-        console.log("data", data);
-        if (data.success) {
+    // axios({
+    //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
+    //   method: "POST",
+    // })
+    //   .then(async ({ data }) => {
+    //     console.log("data", data);
+    //     if (!data.success) {
           const post = await Post.updateOne(
             { _id: req.params.id },
             { $set: req.body }
           );
           res.json(post);
           console.log(post);
-        } else {
-          res.json({ message: "مشکلی در اعتبار سنجی کپچا پیش آمد" });
-        }
-      })
-      .catch((error) => {
-        res.json({ message: "کپچا نا معتبر است" });
-      });
+      //   } else {
+      //     res.json({ message: "مشکلی در اعتبار سنجی کپچا پیش آمد" });
+      //   }
+      // })
+      // .catch((error) => {
+      //   res.json({ message: "کپچا نا معتبر است" });
+      // });
   } catch (error) {
     res.json({ message: error.message });
   }

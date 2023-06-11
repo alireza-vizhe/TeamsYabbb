@@ -21,12 +21,12 @@ exports.addUser = (req, res) => {
     //! Get Data And Find Email Has And Send Error
     const { fullname, email, password, userType, recaptchaValue } = req.body;
 
-    axios({
-      url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
-      method: "POST",
-    })
-      .then(async ({ data }) => {
-        if (data.success) {
+    // axios({
+    //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
+    //   method: "POST",
+    // })
+    //   .then(async ({ data }) => {
+    //     if (!data.success) {
           const userFinder = await User.findOne({ email });
           if (userFinder) {
             res.json({
@@ -61,13 +61,13 @@ exports.addUser = (req, res) => {
             );
           }
           res.json(users);
-        } else {
-          res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
-        }
-      })
-      .catch((error) => {
-        res.json({ message: "کپچا نا معتبر است" });
-      });
+      //   } else {
+      //     res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
+      //   }
+      // })
+      // .catch((error) => {
+      //   res.json({ message: "کپچا نا معتبر است" });
+      // });
   } catch (error) {
     console.log(error);
     res.status(500).send("مشکلی از سمت سرور پیش امده است");
@@ -78,13 +78,13 @@ exports.handleLogin =async (req, res) => {
   try {
     const { email, password, recaptchaValue } = req.body;
 
-    axios({
-      url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
-      method: "POST",
-    })
-      .then(async ({ data }) => {
-        console.log(data);
-        if (data.success) {
+    // axios({
+    //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
+    //   method: "POST",
+    // })
+    //   .then(async ({ data }) => {
+    //     console.log(data);
+    //     if (!data.success) {
           const user = await User.findOne({ email });
           console.log(user);
           if (!user) {
@@ -109,13 +109,13 @@ exports.handleLogin =async (req, res) => {
           } else {
             res.json({ message: "آدرس ایمیل یا کلمه عبور اشتباه است" });
           }
-        } else {
-          res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
-        }
-      })
-      .catch((error) => {
-        res.json({ message: "کپچا نا معتبر است" });
-      });
+      //   } else {
+      //     res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
+      //   }
+      // })
+      // .catch((error) => {
+      //   res.json({ message: "کپچا نا معتبر است" });
+      // });
   } catch (error) {
     res.json({ message: "مشکلی از سمت سرور پیش آمد" });
   }
@@ -133,11 +133,11 @@ exports.handleForgetPassword = (req,res) => {
   
   try {
     const { email, userId, recaptchaValue } = req.body;
-    axios({
-      url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
-      method: "POST",
-    }).then( async ({data}) => {
-      if(data.success){
+    // axios({
+    //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
+    //   method: "POST",
+    // }).then( async ({data}) => {
+    //   if(!data.success){
 
         console.log(data);
         const user = await User.findOne({email});
@@ -162,12 +162,12 @@ exports.handleForgetPassword = (req,res) => {
           console.log("sended");
     
         }
-      }else{
-        res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
-      }
-    }).catch((error) => {
-      res.json({ message: "کپچا نا معتبر است" });
-    })
+    //   }else{
+    //     res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
+    //   }
+    // }).catch((error) => {
+    //   res.json({ message: "کپچا نا معتبر است" });
+    // })
   } catch (error) {
     res.json(error)
   }
@@ -178,12 +178,12 @@ exports.handleResetPassword = (req, res) => {
   
   try {
       const { password, confirmPassword, recaptchaValue } = req.body;
-      axios({
-        url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
-        method: "POST",
-      }).then( async ({data}) => {
-        console.log(data);
-        if(data.success){
+      // axios({
+      //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${recaptchaValue}`,
+      //   method: "POST",
+      // }).then( async ({data}) => {
+      //   console.log(data);
+      //   if(!data.success){
           // const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
           // if(!decodedToken){
             //   res.json({message: "شما مجوز این عملیات را ندارید"});
@@ -205,12 +205,12 @@ exports.handleResetPassword = (req, res) => {
             user.password = hash;
             await user.save();
             res.json({messageSUC: "عملیات با موفقیت انجام شد"});
-        }else{
-          res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
-        }
-      }).catch((error) => {
-        res.end({ message: "کپچا نا معتبر است" });
-      })
+      //   }else{
+      //     res.json({ message: "مشکلی در اعتبار سنجی پیش آمد" });
+      //   }
+      // }).catch((error) => {
+      //   res.end({ message: "کپچا نا معتبر است" });
+      // })
     } catch (error) {
       res.json({message: "ارور"})
       console.log("err");
