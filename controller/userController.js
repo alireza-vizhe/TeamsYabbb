@@ -129,7 +129,7 @@ exports.getSingleUser = async (req, res) => {
   }
 };
 
-exports.handleForgetPassword = (req,res) => {
+exports.handleForgetPassword = async (req,res) => {
   
   try {
     const { email, userId, recaptchaValue } = req.body;
