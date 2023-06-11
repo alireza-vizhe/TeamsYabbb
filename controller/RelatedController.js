@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 const Related = require("../model/RelatedModel");
 const { sendEmail, sendRelatedEmail } = require("../utils/mailer");
 
-exports.relatedAd = (req, res) => {
+exports.relatedAd = async (req, res) => {
     try {
         const {fullname, email, recaptchaValue} = req.body;
         // axios({

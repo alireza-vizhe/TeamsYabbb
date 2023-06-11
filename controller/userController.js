@@ -15,7 +15,7 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.addUser = (req, res) => {
+exports.addUser = async (req, res) => {
   console.log(req.body);
   try {
     //! Get Data And Find Email Has And Send Error
@@ -173,7 +173,7 @@ exports.handleForgetPassword = (req,res) => {
   }
 }
 
-exports.handleResetPassword = (req, res) => {
+exports.handleResetPassword = async (req, res) => {
   console.log(req.body);
   
   try {
