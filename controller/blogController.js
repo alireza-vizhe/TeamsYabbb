@@ -29,7 +29,7 @@ exports.handleSendResume = async (req, res) => {
         sender[0].fullname 
       } .برای مشاهده و دانلود رزومه وارد داشبورد > مشاهده رزومه های ارسال شده برای من > خود شوید`
     );
-    res.send({message: "رزومه شما با موفقیت ارسال شد"})
+    res.send({messageSUC: "رزومه شما با موفقیت ارسال شد"})
   } catch (error) {
     console.log(error);
   }
