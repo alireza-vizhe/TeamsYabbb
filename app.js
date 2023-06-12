@@ -71,7 +71,7 @@ app.post("/upload-image", upload.single("textImage"), function (req, res) {
     method: "POST",
   })
     .then(async ({ data }) => {
-      if (data.success) {
+      if (!data.success) {
         console.log("datablulu", data);
         try {
           sharp(req.file.buffer)
