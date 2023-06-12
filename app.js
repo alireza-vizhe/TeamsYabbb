@@ -188,7 +188,7 @@ app.post(
     console.log(req.file, "id", req.body);
     const userImg = await Resume.findOne({ userId: req.body.userId });
     const userImgg = await User.findOne({ _id: req.body.userId });
-    if (userImgg.img) {
+    if (req.file) {
       if (userImgg.img) {
         sharp(req.file.buffer)
           .resize(400, 600)
