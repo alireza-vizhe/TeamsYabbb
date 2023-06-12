@@ -205,8 +205,8 @@ app.post(
               contentType: req.file.mimetype,
             };
             // console.log(userImg.img);
-            res.json(userImgg.img);
-            // res.json({messageSUC: "عکس رزومه بروزرسانی شد"});
+            // res.json(userImgg.img);
+            res.json({messageSUC: "عکس رزومه بروزرسانی شد"});
             
             userImgg.save();
 
