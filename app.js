@@ -143,7 +143,7 @@ app.post(
 
             findToSave.save();
 
-            console.log("updated");
+            res.json({ messageSUC: "آپلود شد" });
           });
       } else {
         sharp(req.file.buffer)
@@ -168,7 +168,7 @@ app.post(
               .catch((err) => {
                 console.log(err);
               });
-            res.json({ message: "savedddd" });
+            res.json({ messageSUC: "آپلود شد" });
           })
           .catch((err) => {
             console.log(err);
