@@ -87,7 +87,7 @@ exports.handleLogin =async (req, res) => {
     //     console.log(data);
     //     if (!data.success) {
           const user = await User.findOne({ email });
-          console.log(user);
+          // console.log(user);
           if (!user) {
             res.json({ message: "کاربری با این ایمیل یافت نشد" });
             return;
@@ -107,7 +107,7 @@ exports.handleLogin =async (req, res) => {
               process.env.JWT_SECRET
             );
            res.status(200).res.json({ token, userId: user._id.toString() });
-           console.log(user);
+           console.log(user._id);
           } else {
             res.json({ message: "آدرس ایمیل یا کلمه عبور اشتباه است" });
           }
