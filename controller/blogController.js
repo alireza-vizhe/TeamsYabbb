@@ -12,7 +12,7 @@ exports.handleSendResume = async (req, res) => {
     // console.log(
     //   "user is this",
     //   acceptor[0].fullname,
-    //   "sender user is",
+    //   "sender user is",s
     //   sender[0]
     // );
     // console.log("acceptor," , acceptor[0].recieveResumes);
