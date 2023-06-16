@@ -45,7 +45,7 @@ const User = mongoose.Schema({
   },
   Proposal: {
     type: String,
-    default: 2
+    default: 10
   },
   sended: {
     type: Array,

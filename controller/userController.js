@@ -106,7 +106,8 @@ exports.handleLogin =async (req, res) => {
               },
               process.env.JWT_SECRET
             );
-            res.status(200).json({ token, userId: user._id.toString() });
+           res.status(200).res.json({ token, userId: user._id.toString() });
+           console.log(user);
           } else {
             res.json({ message: "آدرس ایمیل یا کلمه عبور اشتباه است" });
           }
