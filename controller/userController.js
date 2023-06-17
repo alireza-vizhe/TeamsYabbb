@@ -85,9 +85,9 @@ exports.handleLogin =async (req, res) => {
     // })
     //   .then(async ({ data }) => {
     //     console.log(data);
-    //     if (!data.success) {
+    //     if (data.success) {
           const user = await User.findOne({ email });
-          // console.log(user);
+          console.log(user);
           if (!user) {
             res.json({ message: "کاربری با این ایمیل یافت نشد" });
             return;
@@ -106,8 +106,7 @@ exports.handleLogin =async (req, res) => {
               },
               process.env.JWT_SECRET
             );
-           res.status(200).res.json({ token, userId: user._id.toString() });
-           console.log(user._id);
+            res.status(200).json({ token, userId: user._id.toString() });
           } else {
             res.json({ message: "آدرس ایمیل یا کلمه عبور اشتباه است" });
           }
@@ -141,7 +140,7 @@ exports.handleForgetPassword = async (req,res) => {
     // }).then( async ({data}) => {
     //   if(!data.success){
 
-        console.log(data);
+        // console.log(data);
         const user = await User.findOne({email});
         if(!user){
           res.json({message: "کاربری با این ایمیل در پایگاه داده ثبت نشده است"});
