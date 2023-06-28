@@ -279,6 +279,7 @@ exports.handleBuy = async (req, res) => {
       request(options)
         .then(async (data) => {
           console.log(data.Authority);
+          console.log(data);
           res.json({
             messageURL: `https://zarinpal.com/pg/StartPay/${data.Authority}`,
             courseId: user._id,
