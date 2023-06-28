@@ -13,6 +13,7 @@ router.post("/forget-password", UserController.handleForgetPassword);
 router.post("/reset-password/:id", UserController.handleResetPassword);
 router.post("/edit-user/:id", UserController.editUser);
 router.post("/contact-us", UserController.sendEmailToContactUs);
+router.post("/buy-proposal", UserController.handleBuy);
 
 module.exports = router;
 

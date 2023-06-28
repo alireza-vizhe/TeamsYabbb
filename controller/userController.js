@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const { sendEmail } = require("../utils/mailer");
+const request = require("request-promise");
 
 
 exports.getUser = async (req, res) => {
@@ -246,4 +247,51 @@ exports.sendEmailToContactUs = async (req, res) => {
  } catch (error) {
   console.log("error", error);
  } 
+}
+
+exports.handleBuy = async (req, res) => {
+  console.log(req.body);
+  try {
+
+    const user = await User.findOne({ _id: req.body.userId }); 
+
+    if(user){
+      //! this
+      let params = {
+        MerchantID: `97221328-b053-11e7-bfb0-005056a205be`,
+        Amount: req.price,
+        CallbackURL: "http://localhost:3000/success-pay",
+        Description: `بابت خرید دوره ${post.name} متشکریم`,
+        Email: user.email,
+      };
+  
+      let options = {
+        method: "POST",
+        url: "https://www.zarinpal.com/pg/rest/WebGate/PaymentRequest.json",
+        header: {
+          "cache-control": "no-cache",
+          "content-type": "application/json",
+        },
+        body: params,
+        json: true,
+      };
+  
+      request(options)
+        .then(async (data) => {
+          res.json({
+            messageURL: `https://zarinpal.com/pg/StartPay/${data.Authority}`,
+            courseId: post._id,
+          });
+          user.coursesIdGeted = [...user.coursesIdGeted, post._id];
+          user.save();
+        })
+        .catch((err) => res.json(err.message));
+      //! Until this
+    }else{
+      res.json({message: "ابتدا وارد شوید"})
+    }
+      
+  } catch (error) {
+    
+  }
 }
