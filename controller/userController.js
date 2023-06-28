@@ -261,7 +261,7 @@ exports.handleBuy = async (req, res) => {
         MerchantID: `97221328-b053-11e7-bfb0-005056a205be`,
         Amount: req.price,
         CallbackURL: "http://localhost:3000/success-pay",
-        Description: `بابت خرید دوره ${post.name} متشکریم`,
+        Description: `امیدواریم از این پیشنهاد بهترین استفاده رو داشته باشید`,
         Email: user.email,
       };
   
