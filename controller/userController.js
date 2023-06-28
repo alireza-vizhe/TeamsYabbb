@@ -29,7 +29,7 @@ exports.addUser = async (req, res) => {
     //     if (!data.success) {
           const userFinder = await User.findOne({ email });
           if (userFinder) {
-            res.json({
+           await res.json({
               message: "کاربری با این ایمیل موجود است",
             });
           }
@@ -70,7 +70,6 @@ exports.addUser = async (req, res) => {
       // });
   } catch (error) {
     console.log(error);
-    res.status(500).send("مشکلی از سمت سرور پیش امده است");
   }
 };
 
