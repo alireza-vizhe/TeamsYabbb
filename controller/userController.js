@@ -252,61 +252,119 @@ exports.sendEmailToContactUs = async (req, res) => {
 exports.handleBuy = async (req, res) => {
   console.log(req.body);
   try {
+    const user = await User.findOne({ _id: req.body.userId });
 
-    const user = await User.findOne({ _id: req.body.userId }); 
+    if (user) {
+      // //! this
+      // let params = {
+      //   MerchantID: `97221328-b053-11e7-bfb0-005056a205be`,
+      //   Amount: req.body.price,
+      //   CallbackURL: "http://localhost:3000/success-pay",
+      //   Description: `امیدواریم از این پیشنهاد بهترین استفاده رو داشته باشید`,
+      //   Email: user.email,
+      // };
 
-    if(user){
-      //! this
-      let params = {
-        MerchantID: `97221328-b053-11e7-bfb0-005056a205be`,
-        Amount: req.body.price,
-        CallbackURL: "http://localhost:3000/success-pay",
-        Description: `امیدواریم از این پیشنهاد بهترین استفاده رو داشته باشید`,
-        Email: user.email,
+      // let options = {
+      //   method: "POST",
+      //   url: "https://www.zarinpal.com/pg/rest/WebGate/PaymentRequest.json",
+      //   header: {
+      //     "cache-control": "no-cache",
+      //     "content-type": "application/json",
+      //   },
+      //   body: params,
+      //   json: true,
+      // };
+
+      // request(options)
+      //   .then(async (data) => {
+      //     console.log(options);
+      //     console.log(data.Authority);
+      //     console.log(data);
+      //    await res.json({
+      //       messageURL: `https://zarinpal.com/pg/StartPay/${data.Authority}`,
+      //       amountProposal: req.body.Proposal,
+      //     });
+      //     user.wantedP = req.body.Proposal
+      //     user.save();
+      //   })
+      //   .catch((err) => console.log(err));
+      // //! Until this
+
+      var data = qs.stringify({
+        api_key: "f1c4e3a5-15cb-421e-b30b-2fcaeb4f57ff",
+        amount: req.body.price,
+        order_id: "85NX85s427",
+        customer_phone: "09141575822",
+        custom_json_fields: '{ "productName":"Shoes752" , "id":52 }',
+        callback_uri: "https://teamsyabbb.onrender.com/success-pay",
+      });
+      var config = {
+        method: "post",
+        url: "https://nextpay.org/nx/gateway/token",
+        data: data,
       };
-  
-      let options = {
-        method: "POST",
-        url: "https://www.zarinpal.com/pg/rest/WebGate/PaymentRequest.json",
-        header: {
-          "cache-control": "no-cache",
-          "content-type": "application/json",
-        },
-        body: params,
-        json: true,
-      };
-  
-      request(options)
-        .then(async (data) => {
-          console.log(options);
-          console.log(data.Authority);
-          console.log(data);
-         await res.json({
-            messageURL: `https://zarinpal.com/pg/StartPay/${data.Authority}`,
-            amountProposal: req.body.Proposal,
-          });
-          user.wantedP = req.body.Proposal
-          user.save();
+
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          res.json({messageURL: `https://nextpay.org/nx/gateway/payment/${response.data.trans_id}`})
+          // res.redirect(
+          //   `https://nextpay.org/nx/gateway/payment/${response.data.trans_id}`
+          // );
+          // res.writeHead(301, {
+          //   Location: `https://nextpay.org/nx/gateway/payment/${response.data.trans_id}`
+          // }).end();
+          // window.location = `https://nextpay.org/nx/gateway/payment/${response.data.trans_id}`
+          // const TI = JSON.stringify(response.data.trans_id).split('"')[1]
+          // // console.log(JSON.stringify(TI));
         })
-        .catch((err) => console.log(err));
-      //! Until this
-    }else{
-     await res.json({message: "ابتدا وارد شوید"})
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      await res.json({ message: "ابتدا وارد شوید" });
     }
-      
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 exports.checker = async (req, res) => {
+  console.log("lolo",req.body);
   try {
-    console.log("hahahahahah", req.body);
+    // console.log("hahahahahah", req.body);
+    // const user = await User.findOne({ _id: req.body.userId });
+    // user.Proposal = req.body.wantedP;
+    // user.wantedP = "0";
+    // user.save();
+
     const user = await User.findOne({ _id: req.body.userId });
+console.log(user);
+    var data = qs.stringify({
+      'api_key': 'f1c4e3a5-15cb-421e-b30b-2fcaeb4f57ff',
+      'amount': req.body.price,
+      'trans_id': req.body.trans_id
+      });
+      // console.log(data.trans_id);
+      var config = {
+        method: 'post',
+        url: `https://nextpay.org/nx/gateway/verify`,
+        data : data
+      };
+
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        
     user.Proposal = req.body.wantedP;
     user.wantedP = "0";
-    user.save()
+    user.save();
+    res.json({messageSUC: "پرداخت با موفقیت انجام شد"})
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   } catch (error) {
     console.log(error);
   }
-}
+};
