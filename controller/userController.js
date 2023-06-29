@@ -259,7 +259,7 @@ exports.handleBuy = async (req, res) => {
       //! this
       let params = {
         MerchantID: `97221328-b053-11e7-bfb0-005056a205be`,
-        Amount: req.price,
+        Amount: req.body.price,
         CallbackURL: "http://localhost:3000/success-pay",
         Description: `امیدواریم از این پیشنهاد بهترین استفاده رو داشته باشید`,
         Email: user.email,
@@ -278,21 +278,33 @@ exports.handleBuy = async (req, res) => {
   
       request(options)
         .then(async (data) => {
+          console.log(options);
           console.log(data.Authority);
           console.log(data);
-          res.json({
+         await res.json({
             messageURL: `https://zarinpal.com/pg/StartPay/${data.Authority}`,
             courseId: user._id,
           });
-          user.coursesIdGeted = [...user.coursesIdGeted, user._id];
+          // user.coursesIdGeted = [...user.coursesIdGeted, user._id];
           user.save();
         })
-        .catch((err) => res.json(err.message));
+        .catch((err) => console.log(err));
       //! Until this
     }else{
-      res.json({message: "ابتدا وارد شوید"})
+     await res.json({message: "ابتدا وارد شوید"})
     }
       
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+exports.checker = async (req, res) => {
+  try {
+    console.log("hahahahahah", req.body);
+    const user = await User.findOne({ _id: req.body.userId });
+    user.Proposal = 10;
+    user.save()
   } catch (error) {
     console.log(error);
   }

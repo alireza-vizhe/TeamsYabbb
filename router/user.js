@@ -14,6 +14,7 @@ router.post("/reset-password/:id", UserController.handleResetPassword);
 router.post("/edit-user/:id", UserController.editUser);
 router.post("/contact-us", UserController.sendEmailToContactUs);
 router.post("/buy-proposal", UserController.handleBuy);
+router.post("/check-pay-user", UserController.checker);
 
 module.exports = router;
 
