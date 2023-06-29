@@ -51,6 +51,10 @@ const User = mongoose.Schema({
     type: Array,
     default: []
   },
+  wantedP: {
+    type: String,
+    default: "0"
+  },
   createdAt: {
     type: Date,
     default: Date.now,

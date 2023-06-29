@@ -283,9 +283,9 @@ exports.handleBuy = async (req, res) => {
           console.log(data);
          await res.json({
             messageURL: `https://zarinpal.com/pg/StartPay/${data.Authority}`,
-            courseId: user._id,
+            amountProposal: req.body.Proposal,
           });
-          // user.coursesIdGeted = [...user.coursesIdGeted, user._id];
+          user.wantedP = req.body.Proposal
           user.save();
         })
         .catch((err) => console.log(err));
@@ -303,7 +303,8 @@ exports.checker = async (req, res) => {
   try {
     console.log("hahahahahah", req.body);
     const user = await User.findOne({ _id: req.body.userId });
-    user.Proposal = 10;
+    user.Proposal = req.body.wantedP;
+    user.wantedP = "0";
     user.save()
   } catch (error) {
     console.log(error);
