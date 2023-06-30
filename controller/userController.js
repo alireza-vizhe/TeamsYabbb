@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const { sendEmail } = require("../utils/mailer");
 const request = require("request-promise");
+var qs = require("qs");
 
 
 exports.getUser = async (req, res) => {
@@ -296,7 +297,7 @@ exports.handleBuy = async (req, res) => {
         order_id: "85NX85s427",
         customer_phone: "09141575822",
         custom_json_fields: '{ "productName":"Shoes752" , "id":52 }',
-        callback_uri: "https://teamsyabbb.onrender.com/success-pay",
+        callback_uri: "http://localhosy:5000/success-pay",
       });
       var config = {
         method: "post",
