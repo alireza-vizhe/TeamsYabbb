@@ -297,7 +297,7 @@ exports.handleBuy = async (req, res) => {
         order_id: "85NX85s427",
         customer_phone: "09141575822",
         custom_json_fields: '{ "productName":"Shoes752" , "id":52 }',
-        callback_uri: "http://localhosy:5000/success-pay",
+        callback_uri: "http://localhost:5000/success-pay",
       });
       var config = {
         method: "post",
