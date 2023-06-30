@@ -294,10 +294,10 @@ exports.handleBuy = async (req, res) => {
       var data = qs.stringify({
         api_key: "f1c4e3a5-15cb-421e-b30b-2fcaeb4f57ff",
         amount: req.body.price,
-        order_id: "85NX85s427",
+        order_id: req.body.userId,
         customer_phone: "09141575822",
         custom_json_fields: '{ "productName":"Shoes752" , "id":52 }',
-        callback_uri: "http://localhost:5000/success-pay",
+        callback_uri: "http://localhost:3000/success-pay",
       });
       var config = {
         method: "post",
